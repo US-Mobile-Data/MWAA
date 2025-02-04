@@ -1,6 +1,32 @@
+# Libraries
+# from airflow import DAG
 from airflow.decorators import dag, task
 from airflow.operators.python_operator import PythonOperator
 from airflow.utils.dates import days_ago
+from airflow.operators import HttpSensor, S3KeySensor
+from airflow.contrib.operators.aws_athena_operator import AWSAthenaOperator
+
+from datetime import datetime, timedelta
+from io import StringIO
+from io import BytesIO
+from time import sleep
+import csv
+import requests
+import json
+import boto3
+import zipfile
+import io
+
+
+# Connections
+s3_bucket_name = 'my-bucket'
+s3_key='files/'
+redshift_cluster='my-redshift-cluster'
+redshift_db='dev'
+redshift_dbuser='awsuser'
+redshift_table_name='movie_demo'
+athena_db='demo_athena_db'
+athena_results='athena-results/'
 
 # Default DAG args
 default_args = {
